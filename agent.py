@@ -1,9 +1,12 @@
 import anthropic
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # Load environment variables from .env file
 
 # This is your connection to Claude
-client = anthropic.Anthropic(api_key='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')
-
-
+client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+print(os.getenv("ANTHROPIC_API_KEY"))  # Debug: Check if API key is loaded correctly
 messages=[]
 
 print("Job Search Agent — type 'quit' to exit\n")
