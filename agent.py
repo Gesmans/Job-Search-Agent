@@ -19,7 +19,7 @@ def AIAgent():
     if user_input == "yes":
         with open('cv.txt', 'r') as file:
                 cv_content = file.read()
-                system_prompt = f"You are a Job search agent. Your task is to analyze the provided CV and generate a list of potential job opportunities that match the skills and experience outlined in {cv_content}. You should extract skills from the CV, search for jobs, and score them"
+                system_prompt = f"You are a Job search agent. Your task is to analyze the provided CV and generate a list of potential job opportunities that match the skills and experience outlined in {cv_content}. You should extract skills from the CV, search for jobs posted within the last 3 days, and score them. Only find mid to senior level roles. Provide a list of the top 5 job opportunities with a brief description and a link to the job posting. If you cannot find any relevant job opportunities, please respond with 'No relevant job opportunities found.'"
         while True:
                 user_input = input("You: ")
                 if user_input.lower() == "exit":
