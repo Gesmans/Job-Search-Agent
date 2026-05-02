@@ -19,7 +19,7 @@ def AIAgent():
     if user_input == "yes":
         with open('cv.txt', 'r') as file:
                 cv_content = file.read()
-                system_prompt = f"You are a Job search agent. Your task is to analyze the provided CV and generate a list of potential job opportunities that match the skills and experience outlined in {cv_content}. You should extract skills from the CV, search for jobs posted within the last 3 days, and score them. Only find mid to senior level roles. Provide a list of the top 5 job opportunities with a brief description and a link to the job posting. If you cannot find any relevant job opportunities, please respond with 'No relevant job opportunities found.'"
+                system_prompt = f"You are a Job search agent. Your task is to analyze the provided CV and generate a list of potential job opportunities that match the skills and experience outlined in {cv_content}. You should extract skills from the CV, search , and score them. Only find mid to senior level roles. Provide a list of the top 5 job opportunities with a brief description and a link to the job posting. If you cannot find any relevant job opportunities, please respond with 'No relevant job opportunities found.' If the Job says the vacancy is closed or has expired, please remove it from the list. Always provide the most up-to-date information. If no link is available, please provide the company name and job title instead. If you are not 100% certain a job is still act"
         while True:
                 user_input = input("You: ")
                 if user_input.lower() == "exit":
@@ -42,8 +42,11 @@ def AIAgent():
                         reply += block.text 
 
                 print(f"Claude: {reply}")
+                save_results(reply)
+
 
                 messages.append({"role": "assistant", "content": reply})
+
 
 
     elif user_input == "no":
@@ -53,7 +56,9 @@ def AIAgent():
         print("Invalid input. Please enter 'yes' or 'no'.")
         exit()
 
-    
+def save_results(content):
+        with open('job_opportunities.txt', 'w') as file:
+            file.write(content)
 
 if __name__ == "__main__":
     AIAgent()
