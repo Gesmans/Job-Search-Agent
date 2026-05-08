@@ -154,9 +154,9 @@ def AIAgent():
 
                 print(f"Claude: {reply}")
                 save_results(reply)
-                # scores = job_score(reply[:1000], cv_summary)
-                # print(f"Job Scores: {scores}")
-                # save_results(f"{reply}\n\nJob Scores:\n{scores}")
+                scores = job_score(reply[:1000], cv_summary)
+                print(f"Job Scores: {scores}")
+                save_results(f"{reply}\n\nJob Scores:\n{scores}")
                 job_list = reply.split("---")
                 print("\nWould you like to generate cover letters for all jobs found?")
                 choice = input("yes/no: ").strip().lower()
