@@ -64,11 +64,11 @@ def select_tasks(cv_file):
                         for job in job_listings:
                             st.write(f"**{job['title']}** at {job['company']} - {job['location']}")
                             st.write(f"[View Job Posting]({job['url']})")
-                       
         else:
             # No saved job opportunities, proceed with search
             st.header("Search for Jobs", key="search_jobs_header")
             search_query = st.text_input("Enter your job search query (e.g., 'Software Engineer in London')", key="search_query")
+            summarise_cv(cv_file)
             if st.button("Search Jobs", key="search_jobs"):
                 if search_query:
                     agent = AIAgent()
