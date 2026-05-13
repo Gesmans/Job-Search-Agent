@@ -88,7 +88,7 @@ def AIAgent():
     with open('cv_summary.txt', 'r') as file:
             cv_summary = file.read()
         
-    if os.path.exists("job_opportunities/job_opportunities.txt"):
+    '''if os.path.exists("job_opportunities/job_opportunities.txt"):
             print("Found saved job results. Use these? (yes/no)")
             use_saved = input().strip().lower()
             if use_saved == "yes":
@@ -122,7 +122,7 @@ def AIAgent():
                             else:
                                 print(f"No URL found for job: {job}. Skipping cover letter generation.")
                         
-                        return
+                        return'''
 
 
     while True:
