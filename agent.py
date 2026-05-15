@@ -7,7 +7,6 @@ import re
 from datetime import datetime, timedelta
 
 
-
 os.makedirs('cover_letters', exist_ok=True)  # Create a directory to store cover letters if it doesn't exist
 os.makedirs('job_opportunities', exist_ok=True)  # Create a directory to store job opportunities if it doesn't exist
 
@@ -67,34 +66,17 @@ def is_search_page(url):
     ]
     return any(pattern in url for pattern in search_patterns)
     
-
-def job_score(jobs, cv_summary):
-    response = client.messages.create(
-    model="claude-haiku-4-5-20251001",
-    max_tokens=1024,
-    system=f"You are a job scoring assistant. Score each job from 1-10 based on how well it matches the CV. Format your response as: Job Title — Company Score: X/10 Reason: one sentence why ---",
-    messages=[{"role": "user", "content": f"Here is the CV content: {cv_summary} Here are the job opportunities: {jobs} Score each job based on how well it matches the CV."}]
-    )
-    
-    reply = ""
-    for block in response.content: 
-        if block.type == "text":
-            reply += block.text  
-    return reply
-
-
-def AIAgent():
-    with open('cv_summary.txt', 'r') as file:
-            cv_summary = file.read()
         
-def search_jobs(self, search_query):
+def search_jobs(cv_summary, search_query):
+        content = f"Search for jobs matching this CV: {cv_summary} with this search query: {search_query}"
+        print(f"Message length: {len(content)} characters")
         system_prompt = f"You are a Job search agent. Your task is to analyze the provided CV and generate a list of potential job opportunities that match the skills and experience outlined. You should extract skills from the CV. Only find mid level roles. Provide a list of the top 5 job opportunities with a brief description and a For each job found, provide the direct URL to that specific job posting, not a search results page or job board homepage. If you cannot find any relevant job opportunities, please respond with 'No relevant job opportunities found.' If the Job says the vacancy is closed or has expired, please remove it from the list. Always provide the most up-to-date information. If no link is available, please provide the company name and job title instead. If you are not 100% certain a job is still actFormat each job as: Job Title: .., Company: ..., Requirements: ..., URL: https://... URLs must link directly to a single job posting page. Never include job board search pages or listing pages."
         response = client.messages.create(
             model="claude-haiku-4-5-20251001",
             max_tokens=1024,
             system=system_prompt,
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
-            messages=messages[-6:]
+            messages=[{"role": "user", "content": f"Search for jobs matching this CV: {cv_summary} with this search query: {search_query}"}]
         )
         reply = ""
         for block in response.content:
