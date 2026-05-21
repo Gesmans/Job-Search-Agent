@@ -6,6 +6,16 @@ from agent import search_jobs, get_page_date, is_job_active, is_recent, is_searc
 import re
 import time
 
+st.sidebar.header("Instructions")
+with st.sidebar.expander("How to Use This App", icon=":material/info:"):
+    st.write("""
+        1. Upload your CV in the first step. You can upload a .txt or .pdf file.
+        2. In the second step, you can either search for jobs based on your CV summary or generate a cover letter for a specific job.
+        3. If you choose to search for jobs, you can enter a search query (e.g., 'Software Engineer in London') and the app will return relevant job opportunities.
+        4. You can then generate personalized cover letters for the job opportunities found in the search results.
+        5. If you choose to generate a cover letter directly, simply enter the job title and paste the job description URL, and the app will create a tailored cover letter for you.
+        """)
+
 def read_cv_file(cv_file):
     # Plain text
     if cv_file.name.endswith(".txt"):
@@ -46,11 +56,11 @@ def upload_CV():
             return cv_content
     
     return None
-    
+
 def select_tasks(cv_content):
     # Step 2: Select Task
     st.header("Step 2: Select Task")
-    tab1, tab2 = st.tabs(["Search Jobs", "Generate Cover Letter"])
+    tab1, tab2, tab3 = st.tabs(["Search Jobs", "Generate Cover Letter", "Keyword Confidence"])
 
     with tab1:
         # Check for saved job opportunities
@@ -178,7 +188,10 @@ def select_tasks(cv_content):
 
             else:
                 st.error("Please enter a valid job link and job title.")
-
+    with tab3:
+        st.header("Keyword Confidence")
+        st.write("This tab will display the keyword confidence analysis for your CV and job descriptions.")
+        # Add your keyword confidence analysis code here
 
 def main():
     st.title("Job Search Agent")
